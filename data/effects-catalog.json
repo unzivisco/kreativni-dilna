@@ -1,0 +1,1263 @@
+{
+ "categories": {
+  "ascii": "ASCII & Text",
+  "pixel": "Pixel & Blocks",
+  "print": "Print & Paper",
+  "geometric": "Geometric",
+  "glass": "Glass",
+  "light": "Light & Color",
+  "material": "Material",
+  "glitch": "Glitch",
+  "blur": "Blur",
+  "distort": "Distort"
+ },
+ "effects": [
+  {
+   "id": 1,
+   "name": "Characters, ASCII Art",
+   "category": "ascii",
+   "description_cs": "Fotografie sestavená z tisknutelných znaků podle jasu a lokálních detailů.",
+   "implementation_cs": "Rozděl obraz na buňky, zprůměruj jas a přiřaď znak ze seřazené škály hustoty; vykresli monospace text obarvený volitelně podle zdroje.",
+   "parameters": [
+    "cellSize",
+    "characterRamp",
+    "font",
+    "colorMode",
+    "contrast",
+    "background"
+   ]
+  },
+  {
+   "id": 2,
+   "name": "Dither, Retro Dithering",
+   "category": "print",
+   "description_cs": "Retro fotografie z omezené palety s viditelným vzorem kvantizační chyby.",
+   "implementation_cs": "Omez barvy na paletu; u Floyd–Steinberg přenášej chybu do sousedů v poměrech 7/16, 3/16, 5/16, 1/16; alternativně použij Bayerovu matici.",
+   "parameters": [
+    "algorithm",
+    "palette",
+    "pixelScale",
+    "threshold",
+    "contrast",
+    "animation"
+   ]
+  },
+  {
+   "id": 3,
+   "name": "Glitch, RGB Split & VHS",
+   "category": "glitch",
+   "description_cs": "Digitální VHS glitch kombinující posunuté pruhy, barevné kontury a řádkování.",
+   "implementation_cs": "Nejdřív vykresli základní efekt (např. Pixel Art), nad něj skládej horizontální slice displacement, RGB split, chromatickou aberaci a scanlines.",
+   "parameters": [
+    "sliceCount",
+    "glitchIntensity",
+    "rgbOffset",
+    "chromaticStrength",
+    "scanlines"
+   ]
+  },
+  {
+   "id": 4,
+   "name": "Pixel Art",
+   "category": "pixel",
+   "description_cs": "Obraz z výrazných hranatých pixelů jako ze staré videohry.",
+   "implementation_cs": "Zmenši zdroj do hrubé mřížky, případně kvantizuj paletu a zvětši metodou nearest-neighbor bez vyhlazení.",
+   "parameters": [
+    "pixelSize",
+    "paletteSize",
+    "saturation",
+    "contrast",
+    "edgeBoost"
+   ]
+  },
+  {
+   "id": 5,
+   "name": "Block Characters",
+   "category": "ascii",
+   "description_cs": "Terminálová pixel-art kresba z Unicode bloků.",
+   "implementation_cs": "Každou buňku rozděl na 2×2 nebo 2×4 subpixely; z jejich binárního vzoru sestav příslušný Unicode blokový znak a nastav barvy.",
+   "parameters": [
+    "cellSize",
+    "subpixelLayout",
+    "threshold",
+    "foreground",
+    "background"
+   ]
+  },
+  {
+   "id": 6,
+   "name": "Photo Mosaic",
+   "category": "pixel",
+   "description_cs": "Fotografie složená z pravidelných barevných obdélníkových dlaždic.",
+   "implementation_cs": "Rozděl obraz na dlaždice, určete průměrnou či mediánovou barvu uvnitř každé a vykresli vyplněné obdélníky.",
+   "parameters": [
+    "tileWidth",
+    "tileHeight",
+    "gap",
+    "border",
+    "quantization"
+   ]
+  },
+  {
+   "id": 7,
+   "name": "LEGO Bricks",
+   "category": "pixel",
+   "description_cs": "Fotografie přestavěná na plastové kostky s typickými výstupky.",
+   "implementation_cs": "Kvantizuj barvy, kresli mřížku obdélníkových kostek, cylindrické výstupky a směrové světlo se stínem.",
+   "parameters": [
+    "brickSize",
+    "studRadius",
+    "plasticPalette",
+    "bevel",
+    "lightDirection"
+   ]
+  },
+  {
+   "id": 8,
+   "name": "Dots, Halftone Print",
+   "category": "ascii",
+   "description_cs": "Portrét či scéna složená z teček měnících velikost podle tónu.",
+   "implementation_cs": "Pravidelně vzorkuj jas a pro každou buňku vykresli kolečko o poloměru odvozeném od tonality; volitelně otoč mřížku.",
+   "parameters": [
+    "spacing",
+    "minRadius",
+    "maxRadius",
+    "invert",
+    "inkColor",
+    "angle"
+   ]
+  },
+  {
+   "id": 9,
+   "name": "Voxel Cubes",
+   "category": "pixel",
+   "description_cs": "Fotografie jako plocha malých izometrických 3D krychlí.",
+   "implementation_cs": "Vzorkuj barvy na odsazené mřížce, kresli u každého bodu tři viditelné polygonové stěny krychle se samostatným zesvětlením a ztmavením.",
+   "parameters": [
+    "cubeSize",
+    "gridSpacing",
+    "faceShading",
+    "outline",
+    "blendMode"
+   ]
+  },
+  {
+   "id": 10,
+   "name": "Disco, Mirror Sphere",
+   "category": "light",
+   "description_cs": "Fotografie přenesená na lesklou disko kouli s odlesky.",
+   "implementation_cs": "Mapuj vstupní obraz do sférických UV souřadnic, rozděl povrch na zrcadlové facety a přidej specular highlights, bloom a světelné záblesky.",
+   "parameters": [
+    "sphereRadius",
+    "tileCount",
+    "reflectivity",
+    "bloom",
+    "flare"
+   ]
+  },
+  {
+   "id": 11,
+   "name": "Animated ASCII",
+   "category": "ascii",
+   "description_cs": "Pohyblivý obraz nebo video převedené snímek po snímku na ASCII.",
+   "implementation_cs": "Aplikuj ASCII renderer na každý snímek videa se stabilní mřížkou; snímky exportuj jako video nebo GIF.",
+   "parameters": [
+    "fps",
+    "cellSize",
+    "characterRamp",
+    "palette",
+    "temporalStability"
+   ]
+  },
+  {
+   "id": 12,
+   "name": "Cross Glyphs",
+   "category": "geometric",
+   "description_cs": "Rastr plusů a křížků, který nahrazuje původní kresbu.",
+   "implementation_cs": "V pravidelných buňkách kresli + nebo × a měň velikost, tloušťku či hustotu podle lokálního jasu.",
+   "parameters": [
+    "glyphType",
+    "spacing",
+    "strokeWidth",
+    "scale",
+    "invert"
+   ]
+  },
+  {
+   "id": 13,
+   "name": "Diagonal Strokes",
+   "category": "geometric",
+   "description_cs": "Fotografie vyjádřená šikmými tahy či texturou šrafování.",
+   "implementation_cs": "Vzorkuj obraz na mřížce a kresli úsečky se sklonem / nebo \\; délku a hustotu řídi jasem či gradientem.",
+   "parameters": [
+    "spacing",
+    "angle",
+    "strokeLength",
+    "strokeWidth",
+    "contrast"
+   ]
+  },
+  {
+   "id": 14,
+   "name": "Diamond Glyphs",
+   "category": "geometric",
+   "description_cs": "Obraz sestavený ze špičatých kosočtverců s měnící se velikostí.",
+   "implementation_cs": "Kresli v mřížce čtyřvrcholové diamanty a jejich plochu mapuj na jas nebo barvu lokální buňky.",
+   "parameters": [
+    "spacing",
+    "diamondSize",
+    "rotation",
+    "colorMode",
+    "threshold"
+   ]
+  },
+  {
+   "id": 15,
+   "name": "Lines, Vertical Strokes",
+   "category": "geometric",
+   "description_cs": "Minimalistický portrét z vertikálních čárek připomínající čárový kód.",
+   "implementation_cs": "Každou buňku nahraď svislou úsečkou; délku, tloušťku či rozestup měň podle jasu a hran.",
+   "parameters": [
+    "spacing",
+    "lineHeight",
+    "strokeWidth",
+    "edgeInfluence",
+    "threshold"
+   ]
+  },
+  {
+   "id": 16,
+   "name": "Mixed Glyphs",
+   "category": "ascii",
+   "description_cs": "Bohatší znaková mozaika kombinující znaky a grafické symboly.",
+   "implementation_cs": "Sestav více znakových sad se změřenou pokryvností; pro každou buňku vybírej znak podle jasu a případně orientace hrany.",
+   "parameters": [
+    "glyphSets",
+    "cellSize",
+    "contrast",
+    "edgeWeight",
+    "colorMode"
+   ]
+  },
+  {
+   "id": 17,
+   "name": "ASCII Studio",
+   "category": "ascii",
+   "description_cs": "Precizní plakátový ASCII obraz na černém podkladu.",
+   "implementation_cs": "Vykresli tónově mapované glyfy nebo geometrické značky ve vysoké hustotě a s omezenou barevnou paletou na tmavé ploše.",
+   "parameters": [
+    "glyphType",
+    "density",
+    "shapeScale",
+    "palette",
+    "background"
+   ]
+  },
+  {
+   "id": 18,
+   "name": "Braille",
+   "category": "ascii",
+   "description_cs": "Velmi jemné monochromatické textové zobrazení z braillových buněk.",
+   "implementation_cs": "Blok 2×4 subpixelů prahuj na osm bitů a převeď na Unicode znak U+2800 plus maska bodů.",
+   "parameters": [
+    "threshold",
+    "cellScale",
+    "dither",
+    "invert",
+    "monochrome"
+   ]
+  },
+  {
+   "id": 19,
+   "name": "Hex Mosaic",
+   "category": "pixel",
+   "description_cs": "Obraz přestavěný na šestiúhelníkovou voštinu.",
+   "implementation_cs": "Generuj hexagonální teselaci ve variantě pointy-top/flat-top; do každého polygonu přiřaď průměrnou barvu zakryté oblasti.",
+   "parameters": [
+    "hexRadius",
+    "orientation",
+    "groutWidth",
+    "groutColor"
+   ]
+  },
+  {
+   "id": 20,
+   "name": "LED Matrix",
+   "category": "pixel",
+   "description_cs": "Fotografie jako zářící LED tabule či světelný nápis.",
+   "implementation_cs": "Vzorkuj pravidelnou síť a vykresluj rozsvícené LED prvky s jasem odpovídajícím pixelům, na černém podkladu s aditivním bloom.",
+   "parameters": [
+    "ledType",
+    "pitch",
+    "brightness",
+    "glow",
+    "colorMode",
+    "pulseSpeed"
+   ]
+  },
+  {
+   "id": 21,
+   "name": "CMYK Drops",
+   "category": "print",
+   "description_cs": "Tiskový obraz z překrývajících se azurových, purpurových, žlutých a černých bodů.",
+   "implementation_cs": "Převeď RGB do CMYK, každý kanál rastruj pod odlišným úhlem, velikostí bodu simuluj množství inkoustu a kanály slož na podkladu.",
+   "parameters": [
+    "cellSize",
+    "screenAngles",
+    "inkGain",
+    "dotType",
+    "softness",
+    "paperColor"
+   ]
+  },
+  {
+   "id": 22,
+   "name": "Comic",
+   "category": "print",
+   "description_cs": "Komiksová ilustrace s plošnými barvami, tvrdými konturami a tiskovými body.",
+   "implementation_cs": "Posterizuj barvy, extrahuj hrany Sobelem nebo Canny a přes barevné plochy přidej Ben-Day tečky a černý obrys.",
+   "parameters": [
+    "paletteSize",
+    "edgeThreshold",
+    "outlineWidth",
+    "dotSpacing",
+    "contrast"
+   ]
+  },
+  {
+   "id": 23,
+   "name": "Crosshatch",
+   "category": "print",
+   "description_cs": "Rytina tvořená vrstvenými křížovými šrafy podle stínování.",
+   "implementation_cs": "Jas rozděl do pásem a do tmavších přidávej další soustavy rovnoběžných čar s různými úhly.",
+   "parameters": [
+    "strokeSpacing",
+    "layerCount",
+    "angles",
+    "strokeWidth",
+    "contrast"
+   ]
+  },
+  {
+   "id": 24,
+   "name": "Cyanotype",
+   "category": "print",
+   "description_cs": "Modrobílý fotografický tisk evokující staré technické výkresy.",
+   "implementation_cs": "Převeď obraz do grayscale, zvýrazni hrany a jas interpoluj mezi pruskou modří a bílou; doplň texturu papíru.",
+   "parameters": [
+    "blueTint",
+    "threshold",
+    "edgeStrength",
+    "paperGrain",
+    "contrast"
+   ]
+  },
+  {
+   "id": 25,
+   "name": "Engraving",
+   "category": "print",
+   "description_cs": "Staromódní bankovková rytina pomocí zakřivených vrstevnic.",
+   "implementation_cs": "Spočti gradient či tónová pole a generuj úzké paralelní křivky vedené podél hran; jejich hustotu uprav podle jasu.",
+   "parameters": [
+    "lineSpacing",
+    "curvature",
+    "strokeWidth",
+    "toneLevels",
+    "paperTone"
+   ]
+  },
+  {
+   "id": 26,
+   "name": "Halftone",
+   "category": "print",
+   "description_cs": "Novinový tisk z pravidelných černých bodů rozdílné velikosti.",
+   "implementation_cs": "Převzorkuj obraz na tiskovou mřížku, počítej poloměr každé tečky z lokální intenzity a volitelně mřížku natoč.",
+   "parameters": [
+    "dotPitch",
+    "dotShape",
+    "screenAngle",
+    "invert",
+    "inkColor"
+   ]
+  },
+  {
+   "id": 27,
+   "name": "Mezzotint",
+   "category": "print",
+   "description_cs": "Temná sametová textura složená z jemného zrnitého rastru.",
+   "implementation_cs": "Generuj hustý modrý šum nebo stratifikované náhodné body; intenzitu nebo pravděpodobnost tmavých bodů řiď lokálním jasem.",
+   "parameters": [
+    "grainDensity",
+    "noiseSeed",
+    "contrast",
+    "tonalBias",
+    "inkColor"
+   ]
+  },
+  {
+   "id": 28,
+   "name": "Pointillize",
+   "category": "print",
+   "description_cs": "Malířský obraz z mnoha oddělených barevných teček.",
+   "implementation_cs": "Vzorkuj barevnost v pseudonáhodných bodech, rozmísti malé kruhy nebo skvrny a případně zvyš hustotu kolem hran.",
+   "parameters": [
+    "dotCount",
+    "radiusJitter",
+    "colorJitter",
+    "edgeBias",
+    "seed"
+   ]
+  },
+  {
+   "id": 29,
+   "name": "Posterize",
+   "category": "print",
+   "description_cs": "Výrazná grafika s několika oddělenými pásmy barev.",
+   "implementation_cs": "Kvantizuj jednotlivé barevné kanály nebo celou paletu pomocí k-means a přidej volitelnou hraniční kresbu.",
+   "parameters": [
+    "colorLevels",
+    "palette",
+    "contrast",
+    "edgeThreshold"
+   ]
+  },
+  {
+   "id": 30,
+   "name": "Risograph",
+   "category": "print",
+   "description_cs": "Zrnitý vícebarevný sítotisk s lehce posunutými vrstvami.",
+   "implementation_cs": "Rozděl obraz na omezené spot-color kanály, každému přidej zrnité prahování, malé posunutí registrace a simulační multiply blending.",
+   "parameters": [
+    "inkColors",
+    "misregistration",
+    "grainSize",
+    "threshold",
+    "paperTexture"
+   ]
+  },
+  {
+   "id": 31,
+   "name": "Sketch",
+   "category": "print",
+   "description_cs": "Kresba tužkou s jemnými liniemi a stíny.",
+   "implementation_cs": "Použij grayscale, invertovaný rozostřený obraz a color dodge pro tužkový základ, doplň gradientové šrafování.",
+   "parameters": [
+    "strokeStrength",
+    "blurRadius",
+    "threshold",
+    "paperGrain",
+    "contrast"
+   ]
+  },
+  {
+   "id": 32,
+   "name": "Stippling",
+   "category": "print",
+   "description_cs": "Tonální kresba složená pouze z malých černých bodů.",
+   "implementation_cs": "Rozmísťuj body pomocí weighted Poisson disk sampling; hustotu zvyšuj v tmavých místech, snižuj ve světlých.",
+   "parameters": [
+    "dotCount",
+    "minDistance",
+    "dotRadius",
+    "densityGamma",
+    "seed"
+   ]
+  },
+  {
+   "id": 33,
+   "name": "Warhol",
+   "category": "print",
+   "description_cs": "Pop-art opakování jednoho motivu v kontrastních barevných variantách.",
+   "implementation_cs": "Segmentuj nebo posterizuj motiv, vytvoř vícedílnou koláž a každému dílu aplikuj vlastní vysokokontrastní gradient map.",
+   "parameters": [
+    "gridCount",
+    "paletteSets",
+    "levels",
+    "contrast",
+    "outline"
+   ]
+  },
+  {
+   "id": 34,
+   "name": "Woodblock",
+   "category": "print",
+   "description_cs": "Styl japonského dřevořezu s plochými barvami a tiskovou kresbou.",
+   "implementation_cs": "Segmentuj obraz do velkých barevných regionů, zplošti stíny, přidej tenké obrysové linie a nerovnoměrnou inkoustovou texturu.",
+   "parameters": [
+    "colorCount",
+    "contourWidth",
+    "inkBleed",
+    "grain",
+    "textureScale"
+   ]
+  },
+  {
+   "id": 35,
+   "name": "Droste",
+   "category": "geometric",
+   "description_cs": "Obraz rekurzivně vložený do sebe ve spirále.",
+   "implementation_cs": "Při inverzním mapování souřadnic používej logaritmicko-polární transformaci se škálováním a natočením opakované textury.",
+   "parameters": [
+    "recursionDepth",
+    "scaleFactor",
+    "rotation",
+    "center",
+    "spiralStrength"
+   ]
+  },
+  {
+   "id": 36,
+   "name": "Flow Field",
+   "category": "geometric",
+   "description_cs": "Plynoucí dráhy částic tvořící podobu původního obrázku.",
+   "implementation_cs": "Z gradientů obrazu či curl-noise vytvoř vektorové pole; integruj trajektorie částic Eulerem nebo RK4 a barvi je podle zdroje.",
+   "parameters": [
+    "particleCount",
+    "stepLength",
+    "fieldStrength",
+    "strokeWidth",
+    "seed"
+   ]
+  },
+  {
+   "id": 37,
+   "name": "Forms",
+   "category": "geometric",
+   "description_cs": "Bauhaus koláž z kruhů, čtverců a dalších geometrických značek.",
+   "implementation_cs": "Dlaždicově vzorkuj podklad a pro každý bod vyber geometrický symbol, jeho velikost, rotaci a barvu dle jasu.",
+   "parameters": [
+    "shapeSet",
+    "cellSize",
+    "rotation",
+    "shapeScale",
+    "palette"
+   ]
+  },
+  {
+   "id": 38,
+   "name": "Iso Extrude",
+   "category": "geometric",
+   "description_cs": "Fotografie jako izometrické město ze sloupců různé výšky.",
+   "implementation_cs": "Pixelový jas převeď na výšku hranolu; vykresli horní a boční plochy v izometrii se stíny a řazením podle hloubky.",
+   "parameters": [
+    "blockSize",
+    "heightScale",
+    "lightDirection",
+    "outlines",
+    "palette"
+   ]
+  },
+  {
+   "id": 39,
+   "name": "Lattice",
+   "category": "geometric",
+   "description_cs": "Proplétaná drátěná síť deformovaná fotografií.",
+   "implementation_cs": "Vykresli vodorovné a svislé křivky, jejich uzly deformuj mapou jasu nebo gradientu a střídavým překrytím simuluj výplet.",
+   "parameters": [
+    "gridSpacing",
+    "warpStrength",
+    "lineWidth",
+    "weaveDepth"
+   ]
+  },
+  {
+   "id": 40,
+   "name": "Low Poly",
+   "category": "geometric",
+   "description_cs": "Fotografie složená z nepravidelných plošných trojúhelníků.",
+   "implementation_cs": "Vygeneruj body s vyšší hustotou na hranách, spusť Delaunay triangulaci a každý trojúhelník vyplň průměrnou barvou.",
+   "parameters": [
+    "triangleCount",
+    "edgeBias",
+    "randomness",
+    "outlines"
+   ]
+  },
+  {
+   "id": 41,
+   "name": "Neon Grid",
+   "category": "geometric",
+   "description_cs": "Zářící deformovaná mřížka podle obsahu fotografie.",
+   "implementation_cs": "Vzorkuj deformaci z jasové mapy, posouvej vrcholy 2D mřížky a vykresli linky na tmavém podkladu s bloom.",
+   "parameters": [
+    "gridSpacing",
+    "warpStrength",
+    "neonColor",
+    "glowWidth"
+   ]
+  },
+  {
+   "id": 42,
+   "name": "Schematic",
+   "category": "geometric",
+   "description_cs": "Fotografie připomínající technické schéma se spojnicemi a uzly.",
+   "implementation_cs": "Detekuj důležité hrany a body zájmu, zjednoduš je na segmenty a propojuj pomocí linek, značek a popiskových prvků.",
+   "parameters": [
+    "edgeSensitivity",
+    "nodeCount",
+    "lineWidth",
+    "labelDensity"
+   ]
+  },
+  {
+   "id": 43,
+   "name": "Specimen",
+   "category": "geometric",
+   "description_cs": "Přehledová tabule barevných vzorků vytažených ze snímku.",
+   "implementation_cs": "Rozděl obraz na buňky, z každé vypočti reprezentativní barvu, zobraz rámovaný swatch a případně číselný kód.",
+   "parameters": [
+    "gridSize",
+    "swatchPadding",
+    "borderWidth",
+    "labels"
+   ]
+  },
+  {
+   "id": 44,
+   "name": "Topography",
+   "category": "geometric",
+   "description_cs": "Topografická mapa s vrstevnicemi podle jasu obrazu.",
+   "implementation_cs": "Z jasu vytvoř výškovou mapu a pro řadu prahových hodnot vykresli izočáry algoritmem marching squares.",
+   "parameters": [
+    "contourCount",
+    "strokeWidth",
+    "smoothing",
+    "heightContrast"
+   ]
+  },
+  {
+   "id": 45,
+   "name": "Truchet",
+   "category": "geometric",
+   "description_cs": "Pletený ornament ze čtvrtkruhových motivů v mřížce.",
+   "implementation_cs": "Vyplň dlaždice předdefinovanými oblouky a jejich orientaci vybírej deterministicky podle jasu nebo seedovaného šumu.",
+   "parameters": [
+    "tileSize",
+    "arcWidth",
+    "orientationMode",
+    "seed",
+    "colors"
+   ]
+  },
+  {
+   "id": 46,
+   "name": "Fluted Glass",
+   "category": "glass",
+   "description_cs": "Obraz rozdělený vertikálními skleněnými žebry, které posouvají pozadí.",
+   "implementation_cs": "Souřadnici vzorkování X deformuj periodickou sinusovkou; přidej pruhové světelné odlesky a případné lokální rozostření.",
+   "parameters": [
+    "ribWidth",
+    "refractionStrength",
+    "highlightWidth",
+    "blur"
+   ]
+  },
+  {
+   "id": 47,
+   "name": "Frosted Glass",
+   "category": "glass",
+   "description_cs": "Fotografie rozptýlená jako za matným sklem.",
+   "implementation_cs": "Zkombinuj rozostření, jemné náhodné posuny UV souřadnic z noise textury a poloprůhlednou světlou vrstvu.",
+   "parameters": [
+    "blurRadius",
+    "noiseScale",
+    "refractionStrength",
+    "opacity"
+   ]
+  },
+  {
+   "id": 48,
+   "name": "Glass Orb",
+   "category": "glass",
+   "description_cs": "Fotografie opticky zvětšená a zakřivená v průhledné kouli.",
+   "implementation_cs": "Uvnitř kruhové masky aplikuj radiální refrakční UV transformaci, na hranách Fresnelův odlesk a specular highlight.",
+   "parameters": [
+    "radius",
+    "refractionIndex",
+    "edgeHighlight",
+    "shadow"
+   ]
+  },
+  {
+   "id": 49,
+   "name": "Shatter",
+   "category": "glass",
+   "description_cs": "Obraz rozbitý na nepravidelné posunuté skleněné střepy.",
+   "implementation_cs": "Vytvoř Voronoi polygonální rozdělení, pro každý fragment aplikuj drobný posun/rotaci a vykresli hranové odlesky.",
+   "parameters": [
+    "fragmentCount",
+    "displacement",
+    "rotation",
+    "crackWidth",
+    "seed"
+   ]
+  },
+  {
+   "id": 50,
+   "name": "Tinted Glass",
+   "category": "glass",
+   "description_cs": "Barevná vitráž z nepravidelných polí oddělených tmavou výplní.",
+   "implementation_cs": "Segmentuj obraz do polygonů, zplošti barvy a obkresli hranice tlustou tmavou linkou simulující olověné pásky.",
+   "parameters": [
+    "cellCount",
+    "colorQuantization",
+    "leadWidth",
+    "saturation"
+   ]
+  },
+  {
+   "id": 51,
+   "name": "Vitrine",
+   "category": "glass",
+   "description_cs": "Fotografie pozorovaná přes reliéfní lisované sklo s mnoha facety.",
+   "implementation_cs": "Použij triangulovanou UV displacement mapu, v jednotlivých facetech různé směry refrakce a jemné odlesky.",
+   "parameters": [
+    "facetSize",
+    "refraction",
+    "bevel",
+    "highlightIntensity"
+   ]
+  },
+  {
+   "id": 52,
+   "name": "Aberration",
+   "category": "light",
+   "description_cs": "Barevné obrysy a optická deformace na hranách obrazu.",
+   "implementation_cs": "Vzorkuj kanály RGB v nepatrně odlišných UV souřadnicích, s radiálním posunem rostoucím od středu.",
+   "parameters": [
+    "channelOffset",
+    "radialStrength",
+    "center",
+    "edgeFalloff"
+   ]
+  },
+  {
+   "id": 53,
+   "name": "Anaglyph 3D",
+   "category": "light",
+   "description_cs": "Retro červeno-azurový stereoskopický obraz.",
+   "implementation_cs": "Vytvoř dvě horizontálně posunuté kopie a slož levý pohled v červeném kanálu s pravým v zeleném a modrém.",
+   "parameters": [
+    "eyeSeparation",
+    "depthMap",
+    "redGain",
+    "cyanGain"
+   ]
+  },
+  {
+   "id": 54,
+   "name": "Dreamdust",
+   "category": "light",
+   "description_cs": "Jemné světélkující částečky nad fotografií.",
+   "implementation_cs": "Rozmísti particle sprites podle jasové mapy a přidej časově řízený drift, blikání a aditivní bloom.",
+   "parameters": [
+    "particleCount",
+    "particleSize",
+    "driftSpeed",
+    "glow",
+    "seed"
+   ]
+  },
+  {
+   "id": 55,
+   "name": "Duotone",
+   "category": "light",
+   "description_cs": "Dva odstíny barví stíny a světla celé fotografie.",
+   "implementation_cs": "Převodem na jas spočti interpolaci mezi zvolenou barvou stínů a světel; případně použij smoothstep k úpravě kontrastu.",
+   "parameters": [
+    "shadowColor",
+    "highlightColor",
+    "contrast",
+    "midpoint"
+   ]
+  },
+  {
+   "id": 56,
+   "name": "Edge Glow",
+   "category": "light",
+   "description_cs": "Jasně neonově rozsvícené kontury na tmavém pozadí.",
+   "implementation_cs": "Detekuj Sobelovy či Cannyho hrany, obarvi je neonem a smíchej s rozmazanou kopií additively.",
+   "parameters": [
+    "edgeThreshold",
+    "neonColor",
+    "glowRadius",
+    "lineWidth"
+   ]
+  },
+  {
+   "id": 57,
+   "name": "Gradient Map",
+   "category": "light",
+   "description_cs": "Přemapování všech světlostí na libovolnou vícestupňovou paletu.",
+   "implementation_cs": "Získaný jas použij jako index do 1D barevné gradientové textury se zastávkami.",
+   "parameters": [
+    "colorStops",
+    "contrast",
+    "interpolation",
+    "brightness"
+   ]
+  },
+  {
+   "id": 58,
+   "name": "Kaleidoscope",
+   "category": "light",
+   "description_cs": "Radiálně symetrický obraz tvořený zrcadlenými klíny.",
+   "implementation_cs": "Převáděj UV souřadnice do polárních, úhel opakuj v sektorovém intervalu a střídavě zrcadli.",
+   "parameters": [
+    "segments",
+    "rotation",
+    "center",
+    "zoom"
+   ]
+  },
+  {
+   "id": 59,
+   "name": "Light Wind",
+   "category": "light",
+   "description_cs": "Dlouhé světelné tahy napříč obrazem jako při dlouhé expozici.",
+   "implementation_cs": "Izoluj světlé body, roztáhni je směrovou konvolucí či iterativním částicovým posunem a přičti k základu.",
+   "parameters": [
+    "direction",
+    "streakLength",
+    "threshold",
+    "glow"
+   ]
+  },
+  {
+   "id": 60,
+   "name": "Prism",
+   "category": "light",
+   "description_cs": "Duha a barevné optické třásně vznikající lomem světla.",
+   "implementation_cs": "Simuluj wavelength-dependent UV displacement pro spektrální pásma a slož výsledek zpět do RGB.",
+   "parameters": [
+    "dispersionStrength",
+    "prismAngle",
+    "center",
+    "blend"
+   ]
+  },
+  {
+   "id": 61,
+   "name": "Warpbloom",
+   "category": "light",
+   "description_cs": "Přepálené a deformované světelné skvrny přetékající do okolí.",
+   "implementation_cs": "Odděl highlights prahem, aplikuj vícestupňový Gaussian blur a deformuj jeho UV pomocí noise nebo flow field.",
+   "parameters": [
+    "threshold",
+    "bloomRadius",
+    "warpStrength",
+    "intensity"
+   ]
+  },
+  {
+   "id": 62,
+   "name": "Chrome",
+   "category": "material",
+   "description_cs": "Lesklý tekutý chrom kopírující tvar a jas fotografie.",
+   "implementation_cs": "Z jasu vytvoř přibližné normály a mapuj podle nich kontrastní environment gradient nebo odrazovou texturu.",
+   "parameters": [
+    "metalness",
+    "reflectionContrast",
+    "normalStrength",
+    "highlightShape"
+   ]
+  },
+  {
+   "id": 63,
+   "name": "Crystallize",
+   "category": "material",
+   "description_cs": "Fotografie složená z nepravidelných krystalických plošek.",
+   "implementation_cs": "Vygeneruj Voronoi buňky, vyplň je průměrnou barvou oblasti a tónovaným směrovým stínováním facet.",
+   "parameters": [
+    "seedCount",
+    "cellVariation",
+    "facetShading",
+    "outline"
+   ]
+  },
+  {
+   "id": 64,
+   "name": "Emboss",
+   "category": "material",
+   "description_cs": "Plastický reliéf vystouplý nad kovový povrch.",
+   "implementation_cs": "Spočti gradient výškové mapy z jasu, vytvoř normály a osvětli je z virtuálního směru světla.",
+   "parameters": [
+    "depth",
+    "lightDirection",
+    "metalTint",
+    "contrast"
+   ]
+  },
+  {
+   "id": 65,
+   "name": "Marble",
+   "category": "material",
+   "description_cs": "Žilkovaný mramor s plynule zakřivenými barevnými pruhy.",
+   "implementation_cs": "Zkombinuj turbulence z fraktálního šumu a sinusové žilkování; výsledek propojuj s tónovou mapou fotografie.",
+   "parameters": [
+    "veinFrequency",
+    "turbulence",
+    "stonePalette",
+    "contrast"
+   ]
+  },
+  {
+   "id": 66,
+   "name": "Molten Metal",
+   "category": "material",
+   "description_cs": "Roztavená lesklá kovová hmota se žhavými hranami.",
+   "implementation_cs": "Vytvoř výškovou mapu a metalický shading, rozpal jasné okraje pomocí emissive gradientu a bloom.",
+   "parameters": [
+    "heatColor",
+    "emissionThreshold",
+    "normalStrength",
+    "bloom"
+   ]
+  },
+  {
+   "id": 67,
+   "name": "Oil Paint",
+   "category": "material",
+   "description_cs": "Fotografie malovaná silnými směrovými tahy štětce.",
+   "implementation_cs": "Aplikuj orientované Kuwahara filtrování nebo segmentové brush stamps vedené podle gradientů; přidej reliéf pigmentu.",
+   "parameters": [
+    "brushSize",
+    "strokeDirection",
+    "textureStrength",
+    "colorLevels"
+   ]
+  },
+  {
+   "id": 68,
+   "name": "Thin-Film",
+   "category": "material",
+   "description_cs": "Duhová iridescence podobná olejové skvrně.",
+   "implementation_cs": "Přiřazuj barevný spektrální gradient podle tloušťky simulovaného filmu a směru normál, s jemným opalizujícím mícháním.",
+   "parameters": [
+    "filmThickness",
+    "iridescenceStrength",
+    "viewAngle",
+    "blend"
+   ]
+  },
+  {
+   "id": 69,
+   "name": "Watercolor",
+   "category": "material",
+   "description_cs": "Akvarelové plochy s rozpíjejícími se pigmenty na papíře.",
+   "implementation_cs": "Zjemni barevné regiony, deformuj jejich okraje nízkofrekvenčním šumem a aplikuj pigmentové zrno i papírovou texturu.",
+   "parameters": [
+    "bleedRadius",
+    "pigmentStrength",
+    "paperTexture",
+    "edgeSoftness"
+   ]
+  },
+  {
+   "id": 70,
+   "name": "Waves",
+   "category": "material",
+   "description_cs": "Obraz zdeformovaný do hladkých tekutých vln.",
+   "implementation_cs": "UV souřadnice posouvej sinusovými nebo Gerstnerovými vlnami, případně s animovanou fází.",
+   "parameters": [
+    "amplitude",
+    "wavelength",
+    "direction",
+    "speed"
+   ]
+  },
+  {
+   "id": 71,
+   "name": "Beacon",
+   "category": "glitch",
+   "description_cs": "Paprsky světla vycházející z jasných bodů snímku.",
+   "implementation_cs": "Z prahovaných highlights generuj světelné paprsky pomocí směrového či radiálního rozmazání a aditivního blendingu.",
+   "parameters": [
+    "threshold",
+    "rayDirection",
+    "length",
+    "intensity"
+   ]
+  },
+  {
+   "id": 72,
+   "name": "CRT Screen",
+   "category": "glitch",
+   "description_cs": "Starý obraz na vypouklé CRT obrazovce s řádky a fosforovým svitem.",
+   "implementation_cs": "Proveď barrel distortion, přidej RGB subpixel masku, horizontální scanlines, vignette a malé bloom.",
+   "parameters": [
+    "curvature",
+    "scanlineDensity",
+    "phosphorMask",
+    "bloom",
+    "noise"
+   ]
+  },
+  {
+   "id": 73,
+   "name": "Datamosh",
+   "category": "glitch",
+   "description_cs": "Rozteklé blokové kompresní artefakty známé z poškozeného videa.",
+   "implementation_cs": "Pro věrný video vzhled pracuj s posunutými bloky a časovou propagací předchozího snímku; pro statiku simuluj motion-vector smear.",
+   "parameters": [
+    "blockSize",
+    "temporalPersistence",
+    "displacement",
+    "artifactStrength"
+   ]
+  },
+  {
+   "id": 74,
+   "name": "Digital Distortion",
+   "category": "glitch",
+   "description_cs": "Digitální poškození se skokově posunutými pruhy, šumem a barevnými okraji.",
+   "implementation_cs": "Skládej horizontální displacement slices, RGB channel offset, scanlines, noise a náhodné výpadky bloků.",
+   "parameters": [
+    "sliceCount",
+    "offsetStrength",
+    "rgbOffset",
+    "noise",
+    "scanlines"
+   ]
+  },
+  {
+   "id": 75,
+   "name": "Forensics",
+   "category": "glitch",
+   "description_cs": "Analytický falešně forenzní pohled s mapou kompresních rozdílů.",
+   "implementation_cs": "Srovnej zdroj s lokálně rekomprimovanou verzí pro error-level mapu nebo jen zvýrazni vysokofrekvenční rezidua a aplikuj heatmap.",
+   "parameters": [
+    "differenceGain",
+    "compressionQuality",
+    "heatPalette",
+    "threshold"
+   ]
+  },
+  {
+   "id": 76,
+   "name": "Lofi",
+   "category": "glitch",
+   "description_cs": "Vypraná analogová VHS estetika s měkkostí a zrnem.",
+   "implementation_cs": "Sniž saturaci a kontrast, přidej chroma blur, zrno, kolísání řádků, případně jitter obrazu v čase.",
+   "parameters": [
+    "saturation",
+    "grain",
+    "blur",
+    "trackingJitter",
+    "noiseSpeed"
+   ]
+  },
+  {
+   "id": 77,
+   "name": "Pixel Sort",
+   "category": "glitch",
+   "description_cs": "Řádky obrazu roztažené do abstraktních barevných pruhů.",
+   "implementation_cs": "V každém řádku nebo sloupci vyhledej úseky vyhovující jasovému prahu a uvnitř je seřaď podle jasu či hue.",
+   "parameters": [
+    "threshold",
+    "sortDirection",
+    "sortKey",
+    "maxSegment",
+    "randomness"
+   ]
+  },
+  {
+   "id": 78,
+   "name": "RGB Split",
+   "category": "glitch",
+   "description_cs": "Barevné červené, zelené a modré kontury posunuté od sebe.",
+   "implementation_cs": "Vzorkuj RGB kanály ze zdroje na třech různých souřadnicích; posun lze animovat nebo použít jen v hranách.",
+   "parameters": [
+    "redOffset",
+    "greenOffset",
+    "blueOffset",
+    "direction"
+   ]
+  },
+  {
+   "id": 79,
+   "name": "Scanline",
+   "category": "glitch",
+   "description_cs": "Televizní obraz s tenkými tmavými horizontálními pruhy.",
+   "implementation_cs": "Na výsledný obraz aplikuj periodickou masku jasových řádků, doplň jemné prokládání a šum.",
+   "parameters": [
+    "lineSpacing",
+    "lineOpacity",
+    "phase",
+    "interlace",
+    "noise"
+   ]
+  },
+  {
+   "id": 80,
+   "name": "Thermal",
+   "category": "glitch",
+   "description_cs": "Fotografie obarvená jako výstup termokamery.",
+   "implementation_cs": "Interpoluj jas na barevnou paletu černá–modrá–fialová–červená–žlutá–bílá; jde o falešné pseudoteploty, nikoli měření.",
+   "parameters": [
+    "heatPalette",
+    "minLevel",
+    "maxLevel",
+    "contrast",
+    "noise"
+   ]
+  },
+  {
+   "id": 81,
+   "name": "Gaussian Blur",
+   "category": "blur",
+   "description_cs": "Jemné rovnoměrné ztracení ostrosti.",
+   "implementation_cs": "Aplikuj separabilní Gaussovo rozmazání nejprve horizontálně, potom vertikálně.",
+   "parameters": [
+    "sigma",
+    "radius",
+    "borderMode"
+   ]
+  },
+  {
+   "id": 82,
+   "name": "Motion Blur",
+   "category": "blur",
+   "description_cs": "Fotografie s dlouhými směrovými pohybovými šmouhami.",
+   "implementation_cs": "Akumuluj vzorky zdroje podél vektoru pohybu a jejich barvy zprůměruj; pro video lze využít motion vectors.",
+   "parameters": [
+    "angle",
+    "length",
+    "sampleCount",
+    "opacity"
+   ]
+  },
+  {
+   "id": 83,
+   "name": "Radial Blur",
+   "category": "blur",
+   "description_cs": "Rozmazání rotací nebo přibližováním od vybraného středu.",
+   "implementation_cs": "Vzorkuj obraz podél paprsků vycházejících ze středu či podél kruhových oblouků a průměruj.",
+   "parameters": [
+    "mode",
+    "center",
+    "amount",
+    "samples"
+   ]
+  },
+  {
+   "id": 84,
+   "name": "Tilt-Shift",
+   "category": "blur",
+   "description_cs": "Ostrý pás uprostřed mezi rozostřeným popředím a pozadím.",
+   "implementation_cs": "Spočti Gaussovo rozmazání, poté jej promíchej s původním obrazem podle lineární vzdálenosti od ostrého pásma.",
+   "parameters": [
+    "focusPosition",
+    "focusWidth",
+    "blurRadius",
+    "falloff",
+    "angle"
+   ]
+  },
+  {
+   "id": 85,
+   "name": "Pinch",
+   "category": "distort",
+   "description_cs": "Střed snímku stažený dovnitř jako elastická blána.",
+   "implementation_cs": "V radiálním UV warpingu uprav vzdálenost bodu od středu nelineární mocninovou funkcí.",
+   "parameters": [
+    "center",
+    "radius",
+    "strength",
+    "falloff"
+   ]
+  },
+  {
+   "id": 86,
+   "name": "Polar",
+   "category": "distort",
+   "description_cs": "Fotografie zabalená do kruhové polární geometrie.",
+   "implementation_cs": "Přepočítej souřadnice obdélníku na úhel a poloměr (atan2, length) a vzorkuj zdroj v transformované doméně.",
+   "parameters": [
+    "center",
+    "rotation",
+    "radialScale",
+    "repeat"
+   ]
+  },
+  {
+   "id": 87,
+   "name": "Ripple",
+   "category": "distort",
+   "description_cs": "Soustředné vlny šířící se od bodu dopadu.",
+   "implementation_cs": "Radiálně posouvej UV podle sinusovky závislé na vzdálenosti od středu a času, s útlumem do okrajů.",
+   "parameters": [
+    "center",
+    "amplitude",
+    "frequency",
+    "speed",
+    "damping"
+   ]
+  },
+  {
+   "id": 88,
+   "name": "Shear",
+   "category": "distort",
+   "description_cs": "Fotografie zkosená vodorovně či svisle.",
+   "implementation_cs": "Použij afinní transformační matici se shear koeficientem a zpětné vzorkování.",
+   "parameters": [
+    "shearX",
+    "shearY",
+    "pivot",
+    "borderMode"
+   ]
+  },
+  {
+   "id": 89,
+   "name": "Smudge",
+   "category": "distort",
+   "description_cs": "Obraz rozmazaný tahem prstu po povrchu.",
+   "implementation_cs": "Definuj pole posunu podél virtuálních tahů štětce a iterativně posouvej lokální pixely.",
+   "parameters": [
+    "brushRadius",
+    "dragLength",
+    "strength",
+    "direction"
+   ]
+  },
+  {
+   "id": 90,
+   "name": "Spherize",
+   "category": "distort",
+   "description_cs": "Fotografie vyboulená jako na vypuklé kouli.",
+   "implementation_cs": "Uvnitř kruhové oblasti deformuj poloměr pomocí sférické projekce a zachovej plynulé napojení na vnější obraz.",
+   "parameters": [
+    "center",
+    "radius",
+    "bulgeStrength",
+    "edgeSoftness"
+   ]
+  },
+  {
+   "id": 91,
+   "name": "Twirl",
+   "category": "distort",
+   "description_cs": "Střed fotografie spirálovitě zatočený kolem osy.",
+   "implementation_cs": "Úhel každého pixelu otoč o funkci vzdálenosti od středu, například theta += strength × (1 − r/R)^2.",
+   "parameters": [
+    "center",
+    "radius",
+    "angle",
+    "falloff"
+   ]
+  },
+  {
+   "id": 92,
+   "name": "ZigZag",
+   "category": "distort",
+   "description_cs": "Pravidelné klikaté příčné vlnění obrazu.",
+   "implementation_cs": "Posouvej jeden souřadnicový směr periodickou pilovitou nebo trojúhelníkovou funkcí druhé souřadnice.",
+   "parameters": [
+    "amplitude",
+    "frequency",
+    "orientation",
+    "phase"
+   ]
+  }
+ ]
+}

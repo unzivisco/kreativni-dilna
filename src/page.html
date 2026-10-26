@@ -1,0 +1,275 @@
+<title>Kreativní dílna</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+/*STYLE*/
+</style>
+
+<div class="shell">
+<header class="hub">
+  <a class="logo" href="#"><b aria-hidden="true">K</b><span>Kreativní dílna</span></a>
+  <nav class="nav" aria-label="Moduly"><a href="#" data-v="home">Přehled</a><a href="#efekty" data-v="fx">Efekty</a><a href="#video" data-v="video">Video</a></nav>
+  <button class="icon-btn" id="theme" type="button" aria-label="Přepnout světlý a tmavý vzhled" title="Světlý / tmavý vzhled"><svg class="i" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3.2"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1"/></svg></button>
+</header>
+
+<section class="view home" id="view-home" aria-label="Přehled modulů">
+  <div class="home-in">
+    <div class="intro"><h1>Kreativní dílna</h1><p>Nástroje na obrázky a videa na jednom místě. Všechno se počítá přímo ve vašem prohlížeči, soubory nikam neodcházejí.</p></div>
+    <div class="mods">
+      <a class="mod" href="#efekty"><canvas id="home-fx" width="640" height="360"></canvas><div class="mod-b"><span class="mod-k">Obraz</span><h2>Obrazové efekty</h2><p>92 efektů od ASCII artu přes risograph po glitch. Nahrajte fotku, dolaďte nastavení a stáhněte PNG nebo JPG.</p><div class="mod-f"><span>92 efektů · 10 kategorií</span><b>Otevřít →</b></div></div></a>
+      <a class="mod" href="#video"><canvas id="home-vid" width="640" height="360"></canvas><div class="mod-b"><span class="mod-k">Video</span><h2>Video do portfolia</h2><p>Nahrajte svoje práce, vyberte animaci a stáhněte hotové MP4 pro web, prezentaci nebo sociální sítě.</p><div class="mod-f"><span id="home-vcount">animace · 16:9 až 9:16</span><b>Otevřít →</b></div></div></a>
+      <div class="mod next"><div class="mod-b"><span class="mod-k">Další modul</span><p>Tady přibude další nástroj, až ho budete potřebovat.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="view app" id="view-fx" hidden>
+  <header class="top">
+    <div class="brand"><h2>Obrazové efekty</h2><p>92 efektů · nic se nikam nenahrává</p></div>
+    <div class="tools">
+      <label class="btn" for="file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 11V2.5M4.5 6 8 2.5 11.5 6M2.5 10.5v3h11v-3"/></svg>Nahrát obrázek</label>
+      <input type="file" id="file" accept="image/*" class="vh">
+      <button class="btn" id="sample" type="button">Ukázkový obrázek</button>
+      <span class="sep" aria-hidden="true"></span>
+      <button class="btn" id="compare" type="button" aria-pressed="false">Porovnat s originálem</button>
+      <button class="btn" id="play" type="button" aria-pressed="true" hidden>Pozastavit animaci</button>
+      <span class="sep" aria-hidden="true"></span>
+      <select class="sel" id="exp-size" aria-label="Velikost exportu"><option value="full">Plné rozlišení</option><option value="preview">Velikost náhledu</option></select>
+      <select class="sel" id="exp-fmt" aria-label="Formát exportu"><option value="png">PNG</option><option value="jpg">JPG</option></select>
+      <button class="btn primary" id="export" type="button"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2.5V11M4.5 7.5 8 11l3.5-3.5M2.5 13.5h11"/></svg>Stáhnout</button>
+    </div>
+  </header>
+
+  <aside class="index" aria-label="Seznam efektů">
+    <div class="search"><input id="q" type="search" placeholder="Hledat efekt…" aria-label="Hledat efekt" autocomplete="off"></div>
+    <nav class="list" id="list"></nav>
+  </aside>
+
+  <main class="stage" id="stage">
+    <div class="head"><h2 id="fx-name">Characters, ASCII Art</h2><span class="chip" id="fx-cat">ASCII &amp; Text</span><p id="fx-desc"></p></div>
+    <div class="viewport" id="viewport">
+      <div class="frame" id="frame">
+        <canvas id="out"></canvas>
+        <canvas id="orig"></canvas>
+        <div class="handle"></div>
+        <span class="tag l">Originál</span><span class="tag r">Efekt</span>
+      </div>
+      <div class="busy" id="busy" hidden><span id="busy-t">Vykresluji…</span></div>
+    </div>
+    <div class="status" id="status"><span id="st-img">Ukázkový obrázek</span><span id="st-size"></span><span id="st-time"></span><span>Obrázek můžete přetáhnout sem nebo vložit ze schránky (⌘V / Ctrl+V)</span><span id="st-err" class="err" hidden></span></div>
+  </main>
+
+  <aside class="side" aria-label="Nastavení">
+    <section class="sec">
+      <div class="sec-h"><h3>Nastavení efektu</h3><div class="acts"><button class="btn small" id="reset" type="button">Výchozí</button><button class="btn small" id="random" type="button">Náhodně</button></div></div>
+      <div id="params" class="plist"></div>
+    </section>
+    <section class="sec">
+      <details class="how" id="how"><summary>Jak efekt funguje</summary><p id="fx-impl"></p></details>
+    </section>
+    <section class="sec">
+      <div class="sec-h"><h3>Předúprava fotky</h3><div class="acts"><button class="btn small" id="pre-reset" type="button">Vynulovat</button></div></div>
+      <div class="ctl"><label for="pre-brightness"><span class="name">Jas</span><output id="pre-brightness-o">0</output></label><input type="range" id="pre-brightness" min="-0.5" max="0.5" step="0.01" value="0"></div>
+      <div class="ctl"><label for="pre-contrast"><span class="name">Kontrast</span><output id="pre-contrast-o">1.00</output></label><input type="range" id="pre-contrast" min="0.5" max="2" step="0.01" value="1"></div>
+      <div class="ctl"><label for="pre-saturation"><span class="name">Sytost</span><output id="pre-saturation-o">1.00</output></label><input type="range" id="pre-saturation" min="0" max="2" step="0.01" value="1"></div>
+      <p class="note">Úprava se použije před každým efektem. Náhled se počítá v nižším rozlišení, export „Plné rozlišení“ vykreslí obrázek až do 3000 px na delší straně.</p>
+    </section>
+  </aside>
+  <nav class="mtabs" aria-label="Panely"><button type="button" data-tab="index">Efekty</button><button type="button" data-tab="side">Nastavení</button></nav>
+</div>
+
+<div class="view app" id="view-video" hidden>
+  <header class="top">
+    <div class="brand"><h2>Video do portfolia</h2><p>Nahrajte práce, vyberte animaci, stáhněte video</p></div>
+    <div class="tools">
+      <label class="btn" for="v-file"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 11V2.5M4.5 6 8 2.5 11.5 6M2.5 10.5v3h11v-3"/></svg>Nahrát práce</label>
+      <input type="file" id="v-file" accept="image/*,video/*" multiple class="vh">
+      <button class="btn" id="v-sample" type="button">Ukázkové projekty</button>
+      <span class="sep" aria-hidden="true"></span>
+      <select class="sel" id="v-aspect" aria-label="Formát videa"><option value="16:9">16:9 na šířku</option><option value="1:1">1:1 čtverec</option><option value="4:5">4:5 Instagram</option><option value="9:16">9:16 Reels / TikTok</option></select>
+      <select class="sel" id="v-quality" aria-label="Rozlišení"><option value="720">720p</option><option value="1080">1080p</option><option value="1440">1440p</option></select>
+      <select class="sel" id="v-fps" aria-label="Snímková frekvence"><option value="30">30 fps</option><option value="60">60 fps</option></select>
+      <button class="btn primary" id="v-export" type="button"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 2.5V11M4.5 7.5 8 11l3.5-3.5M2.5 13.5h11"/></svg>Vytvořit video</button>
+    </div>
+  </header>
+  <aside class="index" aria-label="Animace">
+    <div class="search"><input id="v-q" type="search" placeholder="Hledat animaci…" aria-label="Hledat animaci" autocomplete="off"></div>
+    <nav class="list" id="v-list"></nav>
+  </aside>
+  <main class="stage" id="v-stage">
+    <div class="head"><h2 id="v-name">Showcase Stream</h2><span class="chip" id="v-kind">3D a perspektiva</span><p id="v-desc"></p></div>
+    <p class="err" id="v-err" hidden></p>
+    <div class="viewport" id="v-viewport">
+      <div class="frame" id="v-frame"><canvas id="v-out"></canvas></div>
+      <div class="busy" id="v-busy" hidden><div class="exp"><strong>Vytvářím video…</strong><div class="bar"><i id="v-bar"></i></div><span id="v-busy-s"></span><button class="btn small" id="v-cancel" type="button">Zrušit</button></div></div>
+    </div>
+    <div class="transport"><button class="btn small" id="v-play" type="button" aria-pressed="true">Pauza</button><input type="range" id="v-scrub" min="0" max="1000" value="0" aria-label="Pozice v animaci"><span id="v-time">0:00.0 / 0:00.0</span></div>
+    <div class="works-h" id="v-works-h"></div>
+    <div class="works" id="v-works"></div>
+  </main>
+  <aside class="side" aria-label="Nastavení videa">
+    <section class="sec"><div class="sec-h"><h3>Nastavení animace</h3><div class="acts"><button class="btn small" id="v-reset" type="button">Výchozí</button></div></div><div id="v-params" class="plist"></div></section>
+    <section class="sec"><div class="sec-h"><h3>Vzhled videa</h3></div><div id="v-common" class="plist"></div></section>
+    <section class="sec"><div class="sec-h"><h3>Export</h3></div><p class="note" id="v-expinfo"></p></section>
+  </aside>
+  <nav class="mtabs" aria-label="Panely"><button type="button" data-tab="index">Animace</button><button type="button" data-tab="side">Vlastnosti</button></nav>
+</div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mp4-muxer@5.1.3/build/mp4-muxer.min.js"></script>
+<script>
+'use strict';
+const CATALOG=/*CATALOG*/null;
+/*FX*/
+
+// ================= App =================
+const $=id=>document.getElementById(id);
+const PREV_MAX=1000,FULL_MAX=3000,LS='efektova-dilna-v1';
+const CAT_ORDER=['ascii','pixel','print','geometric','glass','light','material','glitch','blur','distort'];
+const META={};CATALOG.effects.forEach(e=>META[e.id]=e);
+const state={eff:1,vals:{},pre:{brightness:0,contrast:1,saturation:1},playing:true,compare:false};
+try{const s=JSON.parse(localStorage.getItem(LS)||'null');if(s&&FX[s.eff]){state.eff=s.eff;state.vals=s.vals||{};}}catch(e){}
+let fullCanvas=null,preview=null,imgName='Ukázkový obrázek',animTime=0,lastDur=0,lastFrame=0,pending=false,saveT=0,downloadsApi=null;
+if(window.claude&&typeof window.claude.use==='function'){window.claude.use('downloads').then(d=>{downloadsApi=d;}).catch(()=>{});}
+
+const isAnim=eff=>typeof eff.anim==='function'?!!eff.anim(getVals(eff)):!!eff.anim;
+function getVals(eff){const v=state.vals[eff.id]||(state.vals[eff.id]={});for(const d of eff.params){if(v[d.key]===undefined)v[d.key]=d.def;else if(d.type==='select'&&!d.options.some(o=>o[0]===v[d.key]))v[d.key]=d.def;}return v;}
+function persist(){clearTimeout(saveT);saveT=setTimeout(()=>{try{localStorage.setItem(LS,JSON.stringify({eff:state.eff,vals:state.vals}));}catch(e){}},300);}
+function toast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600);}
+
+// ---------- source handling ----------
+function applyPre(id){const {brightness:b,contrast:c,saturation:s}=state.pre;if(b===0&&c===1&&s===1)return;const d=id.data;for(let i=0;i<d.length;i+=4){let r=d[i]/255,g=d[i+1]/255,bl=d[i+2]/255;const l=0.299*r+0.587*g+0.114*bl;r=l+(r-l)*s;g=l+(g-l)*s;bl=l+(bl-l)*s;d[i]=((r-0.5)*c+0.5+b)*255;d[i+1]=((g-0.5)*c+0.5+b)*255;d[i+2]=((bl-0.5)*c+0.5+b)*255;}}
+function buildBase(srcCv,maxSide){const sc=Math.min(1,maxSide/Math.max(srcCv.width,srcCv.height)),w=Math.max(1,Math.round(srcCv.width*sc)),h=Math.max(1,Math.round(srcCv.height*sc)),raw=mk(w,h),rx=raw.getContext('2d');rx.imageSmoothingQuality='high';rx.drawImage(srcCv,0,0,w,h);const id=rx.getImageData(0,0,w,h);applyPre(id);const adj=mk(w,h);adj.getContext('2d').putImageData(id,0,0);return{raw,canvas:adj,src:new Src(id),w,h};}
+function setSource(drawable,w,h,name){const sc=Math.min(1,FULL_MAX/Math.max(w,h));fullCanvas=mk(Math.round(w*sc),Math.round(h*sc));const fx=fullCanvas.getContext('2d');fx.imageSmoothingQuality='high';fx.drawImage(drawable,0,0,fullCanvas.width,fullCanvas.height);imgName=name;$('st-img').textContent=name;rebuildPreview();}
+function rebuildPreview(){if(!fullCanvas)return;preview=buildBase(fullCanvas,PREV_MAX);const o=$('orig');o.width=preview.w;o.height=preview.h;o.getContext('2d').drawImage(preview.raw,0,0);fit();schedule();}
+function loadFile(file){if(!file)return;if(!/^image\//.test(file.type)){toast('Tento soubor není obrázek. Zkuste JPG, PNG nebo WebP.');return;}const url=URL.createObjectURL(file),img=new Image();img.onload=()=>{setSource(img,img.naturalWidth,img.naturalHeight,file.name||'Vložený obrázek');URL.revokeObjectURL(url);};img.onerror=()=>{URL.revokeObjectURL(url);toast('Obrázek se nepodařilo otevřít. Formát HEIC převeďte na JPG.');};img.src=url;}
+
+function makeSample(){
+  const W=1500,H=1000,c=mk(W,H),x=c.getContext('2d'),r=rng(5);
+  let g=x.createLinearGradient(0,0,0,H*0.62);g.addColorStop(0,'#141a3c');g.addColorStop(0.45,'#5b3a78');g.addColorStop(0.78,'#e0697a');g.addColorStop(1,'#ffc58a');x.fillStyle=g;x.fillRect(0,0,W,H*0.62);
+  x.fillStyle='#fff';for(let i=0;i<170;i++){x.globalAlpha=0.3+r()*0.7;const s=1.5+r()*1.8;x.fillRect(r()*W,r()*H*0.33,s,s);}x.globalAlpha=1;
+  g=x.createRadialGradient(1060,520,0,1060,520,300);g.addColorStop(0,'#fffbe8');g.addColorStop(0.3,'#ffd27a');g.addColorStop(0.6,'rgba(255,150,90,0.35)');g.addColorStop(1,'rgba(255,120,90,0)');x.fillStyle=g;x.fillRect(0,0,W,H);
+  x.fillStyle='#fff3c9';x.beginPath();x.arc(1060,520,110,0,TAU);x.fill();
+  for(const [col,base,amp,s] of [['#7a4274',0.50,150,11],['#46285a',0.56,115,23],['#21163a',0.62,80,37]]){x.fillStyle=col;x.beginPath();x.moveTo(0,H);for(let px=0;px<=W;px+=5)x.lineTo(px,H*base-amp*(fbm(px/380,0.5,5,s)*1.7-0.35));x.lineTo(W,H);x.closePath();x.fill();}
+  g=x.createLinearGradient(0,H*0.62,0,H);g.addColorStop(0,'#2c1e42');g.addColorStop(1,'#0b0c1b');x.fillStyle=g;x.fillRect(0,H*0.62,W,H*0.38);
+  for(let i=0;i<34;i++){const y=H*0.63+i*10+Math.pow(i,1.32),w=(240-i*5.5)*(0.7+r()*0.6);x.fillStyle=`rgba(255,${200-i*3},${130-i*2},${0.8-i*0.02})`;x.fillRect(1060-w/2+(r()-0.5)*34,y,w,3+i*0.13);}
+  const sx=400,sy=700,sr=210;x.fillStyle='rgba(0,0,0,0.5)';x.beginPath();x.ellipse(sx+30,sy+sr-8,sr*0.95,sr*0.16,0,0,TAU);x.fill();
+  g=x.createRadialGradient(sx-70,sy-80,8,sx,sy,sr);g.addColorStop(0,'#ffe8f1');g.addColorStop(0.25,'#ff6fa3');g.addColorStop(0.72,'#9c1d5a');g.addColorStop(1,'#33091f');x.fillStyle=g;x.beginPath();x.arc(sx,sy,sr,0,TAU);x.fill();
+  x.strokeStyle='rgba(255,205,150,0.55)';x.lineWidth=6;x.beginPath();x.arc(sx,sy,sr-4,-0.9,0.5);x.stroke();
+  x.textAlign='right';x.fillStyle='rgba(255,255,255,0.94)';x.font='700 124px "Bricolage Grotesque", system-ui, sans-serif';x.fillText('Golden hour',W-70,H-96);
+  x.font='500 28px "IBM Plex Mono", monospace';x.fillStyle='rgba(255,255,255,0.75)';x.fillText('UKÁZKA · 1500 × 1000 PX',W-74,H-50);
+  return c;
+}
+function loadSample(){const c=makeSample();setSource(c,c.width,c.height,'Ukázkový obrázek');}
+
+// ---------- rendering ----------
+function renderTo(target,base,eff,vals,t){
+  target.width=base.w;target.height=base.h;const ctx=target.getContext('2d',{willReadFrequently:true}),k=Math.max(base.w,base.h)/1000,p={};
+  for(const d of eff.params){let v=vals[d.key];if(d.type==='range'&&d.px)v*=k;p[d.key]=v;}
+  eff.render({src:base.src,W:base.w,H:base.h,k,p,t,ctx,canvas:target,srcCanvas:base.canvas,img:()=>ctx.createImageData(base.w,base.h),put:im=>ctx.putImageData(im,0,0)});
+}
+function renderPreview(){
+  if(!preview)return;const eff=FX[state.eff],t0=performance.now();
+  try{renderTo($('out'),preview,eff,getVals(eff),animTime);$('st-err').hidden=true;}
+  catch(e){console.error(e);$('st-err').hidden=false;$('st-err').textContent='Efekt se nepodařilo vykreslit: '+e.message;}
+  lastDur=performance.now()-t0;$('st-size').textContent=`${preview.w} × ${preview.h} px`;$('st-time').textContent=`${Math.round(lastDur)} ms`;
+}
+function schedule(){if(pending)return;pending=true;requestAnimationFrame(()=>{pending=false;renderPreview();});}
+function tick(now){requestAnimationFrame(tick);if(view!=='fx')return;const eff=FX[state.eff];if(!preview||!state.playing||!isAnim(eff))return;if(now-lastFrame<Math.max(40,lastDur*1.4))return;lastFrame=now;animTime=now/1000;renderPreview();}
+requestAnimationFrame(tick);
+function fit(){
+  if(!preview||!$('viewport').clientWidth)return;const vp=$('viewport'),fr=$('frame'),narrow=matchMedia('(max-width:48rem)').matches,pad=narrow?12:28;
+  if(narrow){const w=vp.clientWidth-pad*2;vp.style.height=Math.round(Math.min(window.innerHeight*0.62,w*preview.h/preview.w)+pad*2)+'px';}else vp.style.height='';
+  const aw=vp.clientWidth-pad*2,ah=vp.clientHeight-pad*2,s=Math.min(aw/preview.w,ah/preview.h,narrow?99:1.6),w=Math.max(1,Math.floor(preview.w*s)),h=Math.max(1,Math.floor(preview.h*s));
+  Object.assign(fr.style,{width:w+'px',height:h+'px',left:Math.round((vp.clientWidth-w)/2)+'px',top:Math.round((vp.clientHeight-h)/2)+'px'});
+}
+new ResizeObserver(fit).observe($('viewport'));window.addEventListener('resize',fit);
+
+// ---------- effect list ----------
+function buildList(){
+  const q=$('q').value.trim().toLowerCase(),list=$('list');list.innerHTML='';let any=false;
+  for(const cat of CAT_ORDER){const items=CATALOG.effects.filter(e=>e.category===cat&&FX[e.id]&&(!q||(e.name+' '+e.description_cs+' '+CATALOG.categories[cat]).toLowerCase().includes(q)));if(!items.length)continue;any=true;
+    const sec=document.createElement('section');sec.className='grp';sec.innerHTML=`<h2>${CATALOG.categories[cat]}<span>${items.length}</span></h2>`;const ul=document.createElement('ul');
+    for(const e of items){const li=document.createElement('li'),b=document.createElement('button');b.type='button';b.className='fx';b.dataset.id=e.id;if(e.id===state.eff)b.setAttribute('aria-current','true');b.innerHTML=`<span></span><span class="no">${String(e.id).padStart(2,'0')}</span>`;b.firstChild.textContent=e.name;b.onclick=()=>selectEffect(e.id);li.append(b);ul.append(li);}
+    sec.append(ul);list.append(sec);}
+  if(!any)list.innerHTML='<p class="empty">Žádný efekt neodpovídá hledání.</p>';
+}
+function selectEffect(id){state.eff=id;persist();document.querySelectorAll('.fx').forEach(b=>b.toggleAttribute('aria-current',+b.dataset.id===id));document.querySelectorAll('.fx[aria-current]').forEach(b=>b.setAttribute('aria-current','true'));showEffect();schedule();}
+function showEffect(){
+  const eff=FX[state.eff],m=META[eff.id];$('fx-name').textContent=m.name;$('fx-cat').textContent=CATALOG.categories[m.category];$('fx-desc').textContent=m.description_cs;$('fx-impl').textContent=m.implementation_cs;
+  buildControls();updatePlay();
+}
+function fmt(d,v){const dec=d.step>=1?0:d.step>=0.1?1:2;return Number(v).toFixed(dec)+(d.unit||'');}
+function buildControls(){const eff=FX[state.eff];plist($('params'),eff.params,getVals(eff),()=>{changed();updatePlay();},'p-'+eff.id);}
+function changed(){persist();schedule();}
+function updatePlay(){const eff=FX[state.eff],a=isAnim(eff),b=$('play');b.hidden=!a;b.setAttribute('aria-pressed',String(state.playing));b.textContent=state.playing?'Pozastavit animaci':'Přehrát animaci';if(a&&!animTime)animTime=performance.now()/1000;schedule();}
+
+// ---------- actions ----------
+$('reset').onclick=()=>{state.vals[state.eff]={};buildControls();changed();updatePlay();};
+$('random').onclick=()=>{const eff=FX[state.eff],v=getVals(eff);for(const d of eff.params){if(d.type==='range'){const n=Math.round((d.min+Math.random()*(d.max-d.min))/d.step)*d.step;v[d.key]=+n.toFixed(4);}else if(d.type==='select')v[d.key]=d.options[Math.floor(Math.random()*d.options.length)][0];else if(d.type==='check')v[d.key]=Math.random()<0.5;else{const q=hsl(Math.random()*360,0.55+Math.random()*0.4,0.25+Math.random()*0.55);v[d.key]='#'+q.map(x=>c8(x).toString(16).padStart(2,'0')).join('');}}buildControls();changed();updatePlay();};
+$('file').onchange=e=>{loadFile(e.target.files[0]);e.target.value='';};
+$('sample').onclick=loadSample;
+$('play').onclick=()=>{state.playing=!state.playing;updatePlay();};
+for(const k of ['brightness','contrast','saturation']){const i=$('pre-'+k),o=$('pre-'+k+'-o');i.oninput=()=>{state.pre[k]=+i.value;o.textContent=k==='brightness'?(+i.value).toFixed(2):(+i.value).toFixed(2);clearTimeout(i._t);i._t=setTimeout(rebuildPreview,60);};}
+$('pre-reset').onclick=()=>{state.pre={brightness:0,contrast:1,saturation:1};for(const k of ['brightness','contrast','saturation']){$('pre-'+k).value=state.pre[k];$('pre-'+k+'-o').textContent=k==='brightness'?'0':'1.00';}rebuildPreview();};
+$('q').oninput=buildList;
+
+// compare
+const frame=$('frame'),stage=$('stage');
+function setSplit(e){const r=frame.getBoundingClientRect();frame.style.setProperty('--split',(clamp((e.clientX-r.left)/r.width)*100).toFixed(2)+'%');}
+$('compare').onclick=()=>{state.compare=!state.compare;$('compare').setAttribute('aria-pressed',String(state.compare));frame.classList.toggle('comparing',state.compare);};
+frame.addEventListener('pointerdown',e=>{if(!state.compare)return;frame.setPointerCapture(e.pointerId);setSplit(e);});
+frame.addEventListener('pointermove',e=>{if(state.compare&&(e.buttons||e.pointerType==='mouse'))setSplit(e);});
+
+// drop & paste
+stage.addEventListener('dragover',e=>{e.preventDefault();stage.classList.add('dropping');});
+stage.addEventListener('dragleave',e=>{if(!stage.contains(e.relatedTarget))stage.classList.remove('dropping');});
+stage.addEventListener('drop',e=>{e.preventDefault();stage.classList.remove('dropping');loadFile(e.dataTransfer.files[0]);});
+document.addEventListener('paste',e=>{if(view==='home'||e.target.closest&&e.target.closest('input'))return;const its=[...(e.clipboardData?.items||[])].filter(i=>/^(image|video)\//.test(i.type));if(!its.length)return;e.preventDefault();if(view==='video')addFiles(its.map(i=>i.getAsFile()));else loadFile(its[0].getAsFile());});
+
+// export
+function slug(s){return s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'obrazek';}
+$('export').onclick=async()=>{
+  if(!fullCanvas)return;const btn=$('export'),eff=FX[state.eff],fmtJ=$('exp-fmt').value==='jpg',full=$('exp-size').value==='full';
+  btn.disabled=true;$('busy').hidden=false;$('busy-t').textContent=full?'Vykresluji v plném rozlišení…':'Připravuji soubor…';
+  await new Promise(r=>setTimeout(r,30));
+  try{
+    const base=full?buildBase(fullCanvas,FULL_MAX):preview;let cv=mk(base.w,base.h);renderTo(cv,base,eff,getVals(eff),animTime);
+    if(fmtJ){const j=mk(cv.width,cv.height),jx=j.getContext('2d');jx.fillStyle='#ffffff';jx.fillRect(0,0,j.width,j.height);jx.drawImage(cv,0,0);cv=j;}
+    const blob=await new Promise(r=>cv.toBlob(r,fmtJ?'image/jpeg':'image/png',0.92));if(!blob)throw new Error('Prohlížeč nevytvořil soubor.');
+    const filename=`${slug(imgName.replace(/\.[a-z0-9]+$/i,''))}-${slug(META[eff.id].name)}.${fmtJ?'jpg':'png'}`;
+    if(downloadsApi){try{await downloadsApi.save({filename,data:blob});toast('Soubor uložen');}catch(err){toast(err&&err.code==='declined'?'Stahování zrušeno':'Soubor se nepodařilo uložit: '+(err&&err.message||'neznámá chyba'));}}
+    else{const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),4000);toast(`Stahuji ${filename}`);}
+  }catch(err){console.error(err);toast('Export selhal: '+err.message);}
+  finally{btn.disabled=false;$('busy').hidden=true;}
+};
+
+/*VIDEO*/
+
+// ---------- hub routing ----------
+let view='home',homeFxDone=false;const homeVid=document.getElementById('home-vid');
+function homeInit(){if(!vs.items.length)loadSamples();if(homeFxDone)return;homeFxDone=true;try{const base=buildBase(makeSample(),640),eff=FX[1],v={};eff.params.forEach(d=>v[d.key]=d.def);const c=mk(1,1);renderTo(c,base,eff,v,0);const h=$('home-fx'),x=h.getContext('2d');x.fillStyle='#0b0b0d';x.fillRect(0,0,640,360);x.drawImage(c,0,(360-c.height)/2);}catch(e){console.error(e);}}
+function route(){
+  const h=location.hash.replace('#','');view=h==='efekty'?'fx':h==='video'?'video':'home';
+  for(const v of ['home','fx','video'])$('view-'+v).hidden=v!==view;
+  document.querySelectorAll('.nav a').forEach(a=>{if(a.dataset.v===view)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+  if(view==='fx'){if(!fullCanvas)loadSample();else{fit();schedule();}}
+  if(view==='video'){vInit();vfit();playVideos(true);}else playVideos(false);
+  if(view==='home')homeInit();
+}
+window.addEventListener('hashchange',route);
+const setFill=el=>{const mn=+el.min||0,mx=+el.max||100;el.style.setProperty('--fill',((el.value-mn)/(mx-mn||1)*100)+'%');};
+document.addEventListener('input',e=>{if(e.target.type==='range')setFill(e.target);},true);
+new MutationObserver(()=>document.querySelectorAll('input[type=range]').forEach(setFill)).observe(document.body,{childList:true,subtree:true});
+document.querySelectorAll('input[type=range]').forEach(setFill);
+try{const th=localStorage.getItem('kd-theme');if(th)document.documentElement.dataset.theme=th;}catch(e){}
+$('theme').onclick=()=>{const cur=document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'),nx=cur==='dark'?'light':'dark';document.documentElement.dataset.theme=nx;try{localStorage.setItem('kd-theme',nx);}catch(e){}};
+document.querySelectorAll('.mtabs button').forEach(b=>b.onclick=()=>{const app=b.closest('.app'),t='tab-'+b.dataset.tab,on=!app.classList.contains(t);app.classList.remove('tab-index','tab-side');if(on)app.classList.add(t);app.querySelectorAll('.mtabs button').forEach(x=>x.setAttribute('aria-pressed',String(on&&x===b)));fit();vfit();});
+$('home-vcount').textContent=TPL.length+' animací · 16:9 až 9:16';
+buildList();showEffect();
+(document.fonts?Promise.race([document.fonts.ready,new Promise(r=>setTimeout(r,1500))]):Promise.resolve()).then(route);
+window.__fx={FX,renderTo,buildBase,makeSample,TPL,vs,renderAt,makeScene};
+</script>
